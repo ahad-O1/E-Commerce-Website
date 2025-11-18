@@ -1,1 +1,79 @@
-
+[
+            {
+                "id": 1,
+                "name": "Laptop",
+                "category": "Electronics",
+                "description": "A high-performance laptop for all your computing needs.",
+                "price": 999.99,
+                "actualPrice": 1299.99,
+                "stock": 50,
+                "brand": "Dell",
+                "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200&h=200&fit=crop"
+            },
+            {
+                "id": 2,
+                "name": "Smartphone",
+                "category": "Electronics",
+                "description": "A latest model smartphone with advanced features and technology.",
+                "price": 699.99,
+                "actualPrice": 899.99,
+                "stock": 100,
+                "brand": "Samsung",
+                "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&h=200&fit=crop"
+            },
+            {
+                "id": 3,
+                "name": "Headphones",
+                "category": "Audio",
+                "description": "Noise-cancelling over-ear headphones for immersive sound.",
+                "price": 199.99,
+                "actualPrice": 299.99,
+                "stock": 200,
+                "brand": "Sony",
+                "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200&h=200&fit=crop"
+            },
+            {
+                "id": 4,
+                "name": "Coffee",
+                "category": "Home",
+                "description": "A programmable coffee maker for your morning brew.",
+                "price": 49.99,
+                "actualPrice": 79.99,
+                "stock": 30,
+                "brand": "Keurig",
+                "image": "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=200&h=200&fit=crop"
+            },
+            {
+                "id": 5,
+                "name": "Gaming Console",
+                "category": "Gaming",
+                "description": "Next-gen gaming console with stunning graphics.",
+                "price": 499.99,
+                "actualPrice": 599.99,
+                "stock": 25,
+                "brand": "Sony",
+                "image": "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=200&h=200&fit=crop"
+            },
+            {
+                "id": 6,
+                "name": "Smart Watch",
+                "category": "Wearables",
+                "description": "Track your fitness and stay connected on the go.",
+                "price": 299.99,
+                "actualPrice": 399.99,
+                "stock": 75,
+                "brand": "Apple",
+                "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop"
+            },
+            {
+                "id": 7,
+                "name": "Tablet",
+                "category": "Electronics",
+                "description": "Portable tablet with stunning display and long battery life and good processing system.",
+                "price": 449.99,
+                "actualPrice": 549.99,
+                "stock": 60,
+                "brand": "Samsung",
+                "image": "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=200&h=200&fit=crop"
+            }
+        ]
