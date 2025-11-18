@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* =======================
+           General Page Styling
+        ======================= */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        #cart-items {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .cart-row:last-child {
+            border-bottom: none;
+        }
+
+        .cart-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .cart-info {
+            flex: 1;
+        }
+
+        .cart-info h2 {
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .cart-info p {
+            margin: 4px 0;
+            color: #7f8c8d;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+        }
+
+        .quantity-controls button {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .quantity-controls button:hover {
+            background-color: #2980b9;
+        }
+
+        .quantity-controls span {
+            min-width: 24px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .remove-btn {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .remove-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .grand-total {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 600px) {
+            .cart-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cart-img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .grand-total {
+                text-align: left;
+            }
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            z-index: 101;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            display: flex;
+            align-items: center;
+            z-index: 101;
+        }
+
+        .cart-link {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .cart-link:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .cart-count {
+            background-color: #ff4757;
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Hide checkbox and mobile toggle by default */
+        .menu-toggle {
+            display: none;
+        }
+
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 101;
+            gap: 4px;
+        }
+
+        .mobile-toggle .bar {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+        
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav {
+      padding: 0 1rem;
+    }
+
+    .mobile-toggle {
+      display: flex;
+      position: absolute;
+      right: 1rem;
+    }
+
+    .cart-icon {
+      position: absolute;
+      right: 60px;
+    }
+
+    .nav-links {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      height: 100vh;
+      width: 70%;
+      max-width: 300px;
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      transition: left 0.3s ease;
+      box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links li {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.3s ease;
+    }
+
+    /* When checkbox is checked, show menu */
+    .menu-toggle:checked~.nav-links {
+      left: 0;
+    }
+
+    .menu-toggle:checked~.nav-links li {
+      opacity: 1;
+      transform: translateX(0);
+      }
+
+    /* Animate bars into X */
+    .menu-toggle:checked~.mobile-toggle .bar:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle:checked~.mobile-toggle .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle:checked~.mobile-toggle .bar:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Stagger animation for menu items */
+    .menu-toggle:checked~.nav-links li:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .menu-toggle:checked~.nav-links li:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .menu-toggle:checked~.nav-links li:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    .menu-toggle:checked~.nav-links li:nth-child(4) {
+      transition-delay: 0.4s;
+    }
+
+    .nav-links a {
+      font-size: 1.2rem;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    .product-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">StyleHub</div>
+
+            <!-- Checkbox for toggle (hidden) -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+
+            <!-- Mobile Toggle Button -->
+            <label for="menu-toggle" class="mobile-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </label>
+
+            <!-- Menu Links -->
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <!-- Cart -->
+            <div class="cart-icon">
+                <a href="cart.html" class="cart-link">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Your Shopping Cart</h1>
+        <div id="cart-items"></div>
+        <div class="grand-total" id="grand-total"></div>
+    </div>
+
+    <script>
+        const container = document.getElementById("cart-items");
+        const grandTotalElem = document.getElementById("grand-total");
+
+        function loadCart() {
+            container.innerHTML = "";
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            if (cart.length === 0) {
+                container.innerHTML = "<h3>Your cart is empty.</h3>";
+                grandTotalElem.textContent = "";
+                return;
+            }
+
+            let grandTotal = 0;
+
+            cart.forEach(item => {
+                const total = item.price * item.quantity;
+                grandTotal += total;
+
+                const row = document.createElement("div");
+                row.className = "cart-row";
+                row.id = `cart-item-${item.id}`;
+                row.innerHTML = `
+                    <img src="${item.image}" class="cart-img">
+                    <div class="cart-info">
+                        <h2>${item.name}</h2>
+                        <p>Price: $${item.price.toFixed(2)}</p>
+                        <div class="quantity-controls">
+                            <button class="decrement" data-id="${item.id}">-</button>
+                            <span id="cart-quantity-${item.id}">${item.quantity}</span>
+                            <button class="increment" data-id="${item.id}">+</button>
+                        </div>
+                        <p>Total: $<span id="cart-total-${item.id}">${total.toFixed(2)}</span></p>
+                        <button class="remove-btn" data-id="${item.id}">❌ Remove</button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+
+            grandTotalElem.textContent = `Grand Total: $${grandTotal.toFixed(2)}`;
+
+            attachCartEvents();
+        }
+
+        function attachCartEvents() {
+            document.querySelectorAll(".increment").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const id = btn.dataset.id;
+                    updateCartQuantity(id, 1);
+                });
+            });
+
+            document.querySelectorAll(".decrement").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const id = btn.dataset.id;
+                    updateCartQuantity(id, -1);
+                });
+            });
+
+            document.querySelectorAll(".remove-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const id = btn.dataset.id;
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        function updateCartQuantity(id, change) {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const item = cart.find(i => i.id == id);
+            if (!item) return;
+
+            item.quantity += change;
+            if (item.quantity < 1) {
+                removeFromCart(id);
+                return;
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        function removeFromCart(id) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart = cart.filter(i => i.id != id);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            loadCart();
+        }
+
+        loadCart();
+    </script>
+</body>
+
+</html>
